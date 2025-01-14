@@ -1,26 +1,25 @@
 #include <iostream>
 #include <cstdlib> // For rand() and srand()
-#include <ctime> // For time() 
+#include <ctime> // For time()
 using namespace std;
 
 // insertion Sort
-int number [10];
-
+int number[10];
 
 void insertNumber()
 {
-    for (int i = 1; i < 11; i++)
+    for (int i = 0; i < 10; i++)
     {
-        cout << "Enter number [" << i << "] : ";
+        cout << "Enter number [" << i + 1 << "] : ";
         cin >> number[i];
     }
 }
 
-void showNumber ()
+void showNumber()
 {
     for (int i = 0; i < 10; i++)
-    {
-        cout << number[i] << " ";  
+    { 
+        cout << number[i] << " ";
     }
     cout << endl;
 }
@@ -28,10 +27,27 @@ void showNumber ()
 void randomNumber()
 {
     srand(time(0));
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++) 
     {
-        number[i] = rand() % 100;
+        number[i] = rand() % 100; // random number between 0 and 99
     }
+    showNumber();
+}
+
+void smallToLargeInsertionSort()
+{
+    for (int i = 1; i < 10; i++)
+    {
+        int temp = number[i];
+        int j = i - 1;
+        while (j >= 0 && number[j] > temp)
+        {
+            number[j + 1] = number[j];
+            j--;
+        }
+        number[j + 1] = temp;
+    }
+    cout << "After sorting (small to large): ";
     showNumber();
 }
 
@@ -39,36 +55,20 @@ void largeToSmallInsertionSort()
 {
     for (int i = 1; i < 10; i++)
     {
-        int target = number[i];
+        int temp = number[i];
         int j = i - 1;
-        while (j >= 0 && number[j] < target)
+        while (j >= 0 && number[j] < temp)
         {
             number[j + 1] = number[j];
-            j = j - 1;
+            j--;
         }
-        number[j + 1] = target;
+        number[j + 1] = temp;
     }
-    cout << "After sorting: ";
+    cout << "After sorting (large to small): ";
     showNumber();
 }
 
-void smallToLargeInsertionSort ()
-{
-    for (int i = 1; i < 10; i++)
-    {
-        int target = number[i];
-        int j = i - 1;
-        while (j >= 0 && number[j] > target)
-        {
-            number[j + 1] = number[j];
-            j = j - 1;
-        }
-        number[j + 1] = target;
-    }
-    cout << "After sorting: ";
-    showNumber();
-}
-void ui ()
+void ui()
 {
     cout << "Insertion Sort" << endl;
     cout << "============================" << endl;
@@ -78,52 +78,28 @@ void ui ()
     cout << "Enter your choice : ";
     int choice;
     cin >> choice;
-    
+
     switch (choice)
     {
         case 1:
-            insertNumber ();
+            insertNumber();
             break;
         case 2:
-            randomNumber ();
+            randomNumber();
             break;
         default:
             cout << "Invalid choice" << endl;
-            break;
+            return;
     }
-    
-    do {
-        cout << "============================" << endl;
-        cout << "1. Sort from small to large" << endl;
-        cout << "2. Sort from large to small" << endl;
-        cout << "0. Exit" << endl;
-        cout << "============================" << endl;
-        int choice;
-        cout << "Enter your choice : ";
-        cin >> choice;
-    
-        switch (choice)
-        {
-            case 1:
-                smallToLargeInsertionSort ();
-                break;
-            case 2:
-                largeToSmallInsertionSort ();
-                break;
-            default:
-                cout << "Invalid choice" << endl;
-                break;
-            case 0:
-                exit(0);
-        }
-    } while (true);
+
+    smallToLargeInsertionSort();
+    largeToSmallInsertionSort();
 }
 
-int main ()
+int main()
 {
-    
-    system ("cls"); 
-    ui ();
-    
+    system("cls");
+    ui();
+
     return 0;
 }
